@@ -5,24 +5,35 @@
 @section('content')
 <div class="container">
 
-    <div class="row justify-content-center my-5">
-        {{-- @php if($post->published): @endphp --}}
+    <div class="post-container m-5">
+        {{-- @php if($post->
+            published): @endphp --}}
+        <div class="post-header row justify-content-between">
+            <div class="col-8">
+                <h2>{{$post->title}}</h2>
+            </div>
+            <div class="col-4">
+                <h6>Creato il: {{$post->created_at}}</h6>
+            </div>
+        </div>
 
-        <div class="col-8 mb-3">
-            <h2>{{$post->title}}</h2>
+        <div class="post-content my-5">
+            <p>{{$post->content}}</p>
         </div>
-        <div class="col-4">
-            <h6>Creato il: {{$post->created_at}}</h6>
-        </div>
-            
-        <p>{{$post->content}}</p>
             {{-- <img src="{{$comic->thumb}}" alt=""> --}}
 
          {{-- @php endif; @endphp --}}
-    </div>
 
-    <a href="{{route("admin.posts.index")}}"><button type="button" class="btn btn-primary">Indietro</button></a>
-    <a href="{{route('admin.posts.destroy', $post->id)}}" class='btn btn-danger'>Elimina post</a>
+    <div class="post-options row">
+
+        <a class='pr-2' href="{{route("admin.posts.index")}}"><button type="button" class="btn btn-primary">Indietro</button></a>
+        
+        <form action="{{route('admin.posts.destroy', $post->id)}}">
+            @csrf
+            @method("DELETE")
+            <button onclick="return confirm('Sicuro di voler cancellare questo post?');" type='submit' class='btn btn-danger'>Elimina post</button>
+        </form>
+    </div>
 </div>
   
 @endsection

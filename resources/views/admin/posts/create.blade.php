@@ -33,13 +33,30 @@
                 <label for="content">Testo</label>
                 <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Inserisci testo del post"></textarea>
             </div>
+
+            <div class="form-group">
+                <label for="category_id">Categoria</label>
+                <select name="category_id" class="form-control" id="">
+                    <option value="">-- seleziona categoria --</option>
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}">
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+                {{-- questa gestione degli errori serve poiché potrebbe essere possibile iniettare tramite html dei valori non consentiti come option della select 
+                (modificando il DOM) e facendo submit invieremmo dati che il server deve scartare --}}
+                @error('category_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
             
             {{-- <div class="form-group">
                 <label for="thumb">Immagine</label>
                 <input type="data" class="form-control @error('thumb') is-invalid @enderror" id="thumb" name="thumb" placeholder="Inserisci l'url dell'immagine del fumetto">
             </div> --}}
             
-            <button type="submit" class="btn btn-primary">Crea post</button> 
+            <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Crea post</button> 
         </form>
 
         @if ($errors->any())

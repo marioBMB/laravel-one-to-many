@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\User;
+use App\Category;
+
 use App\Post;
 
 class PostController extends Controller
@@ -41,7 +44,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -90,7 +94,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -103,14 +108,21 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            'title' => "required|string|between:5,100",
+            'title' => "required|string|between:5,255",
             'content' => "required|string",
             'published' => "required|boolean",
+            'category_id'=> "nullable|exists:categories,id",
+            'image' => "nullable|image|mimes:jpg,bmp,png|max:2048",
             // 'thumb' => "nullable|url",
         ]);
         $form_data = $request->all();
+        
+        if (isset($form_data['image'])){
+            $img_path = Storage::put('uploads', $form_data['image']);
+            $form_data['image'] = $img_path; //sovrascrittura
+        }
         /* va ricalcolato lo slug solo se cambia il titolo */
-        $form_data['slug'] = ($post->title == $data['title']) ? $post->slug : $this->slug($data['title'], $post->id);
+        $form_data['slug'] = ($post->title == $form_data['title']) ? $post->slug : $this->slug($form_data['title'], $post->id);
         
         $post->update($form_data);
         return redirect()->route('admin.posts.index');
