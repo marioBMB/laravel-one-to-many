@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container col-8">
+<div class="container col-10">
 
     <div class="row justify-content-center">
         <div class="col-12">
@@ -22,10 +22,11 @@
             <th scope="row">ID</th>
             <th scope="col">Titolo</th>
             {{-- <th scope="col">Anteprima</th> --}}
+            <th scope="col">Slug</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Pubblicato</th>
             <th scope="col">Data creazione</th>
             <th scope="col">Ultima modifica</th>
-            <th scope="col">Categoria</th>
             <th scope="col" class='text-center'>Azioni</th>
         </tr>
         </thead>
@@ -35,12 +36,13 @@
                 <th scope="row">{{$post->id}}</th>
                 <td>{{$post->title}}</td>
                 {{-- <td><span class='d-inline-block text-truncate' style='max-width: 150px'>{{substr($post->content, 0, 30)}}</span></th> --}}
+                <td>{{$post->slug}}</td>
+                <td>{{$post->category? $post->category->name : "-"}}</th>
                 <td>{{$post->published? "sì": "no"}}</th>
                 <td>{{$post->created_at}}</th>
                 <td>{{$post->updated_at}}</th>
 
                 
-                <td>{{$post->category? $post->category->name : "-"}}</th>
                 {{-- è $post->category? e non $post->category->name? perché se non può accedere a category non può neanche a name è come fosse $post->category (), metodo dell'oggetto di classe Post --}}
 
                 <td>

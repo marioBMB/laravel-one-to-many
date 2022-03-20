@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use App\User;
 use App\Category;
 
 use App\Post;
+
 
 class PostController extends Controller
 {
@@ -55,16 +57,23 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $request->validate([
             'title' => "required|string|between:5,255",
             'content' => "required|string",
             'published' => "required|boolean",
+            'category_id'=> "nullable|exists:categories,id",
+            'image' => "nullable|image|mimes:jpg,bmp,png|max:2048",
             // 'thumb' => "nullable|url",
         ]);
 
-
         $form_data = $request->all();
+
+        if (isset($form_data['image'])){
+            $img_path = Storage::put('uploads', $form_data['image']);
+            $form_data['image'] = $img_path;
+        }
+
         $form_data['slug'] = $this->slug($form_data['title']);
 
         $newPost = new Post();

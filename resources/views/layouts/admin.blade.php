@@ -75,7 +75,7 @@
         </nav>
 
         <div class="container-fluid mt-5">
-            <div class="row">
+            <div class="row m-auto">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar p-4">
                     <div class="sidebar-sticky">
                         <ul class="nav flex-column">

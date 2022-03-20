@@ -9,7 +9,7 @@
             <h1>Nuovo post</h1>
         </div>
             
-        <form action="{{route('admin.posts.store')}}" method="POST">
+        <form action="{{route('admin.posts.store')}}" method="POST" enctype='multipart/form-data'>
             @csrf    
             
             <div class="form-group">
@@ -51,10 +51,10 @@
                 @enderror
             </div>
             
-            {{-- <div class="form-group">
-                <label for="thumb">Immagine</label>
-                <input type="data" class="form-control @error('thumb') is-invalid @enderror" id="thumb" name="thumb" placeholder="Inserisci l'url dell'immagine del fumetto">
-            </div> --}}
+            <div class="form-group">
+                <label for="image">Immagine</label>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="Inserisci l'url dell'immagine del post">
+            </div>
             
             <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Crea post</button> 
         </form>

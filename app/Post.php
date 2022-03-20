@@ -9,7 +9,7 @@ use App\Category;
 class Post extends Model
 {
 
-    protected $fillable = ['title', 'content', 'slug', 'category_id'];
+    protected $fillable = ['title', 'content', 'slug', 'category_id', 'image'];
 
     public function author() {
         return $this->belongsTo('App\User');
@@ -19,3 +19,4 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 }
+

@@ -19,6 +19,10 @@
 
         <div class="post-content my-5">
             <p>{{$post->content}}</p>
+
+            <div class="post-image">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="">
+            </div>
         </div>
             {{-- <img src="{{$comic->thumb}}" alt=""> --}}
 
@@ -26,7 +30,7 @@
 
     <div class="post-options row">
 
-        <a class='pr-2' href="{{route("admin.posts.index")}}"><button type="button" class="btn btn-primary">Indietro</button></a>
+        <a class='pr-2' href="{{route("admin.posts.index")}}"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Indietro</button></a>
         
         <form action="{{route('admin.posts.destroy', $post->id)}}">
             @csrf

@@ -6,7 +6,7 @@
     <div class="container">
 
         <div class='post-header row justify-content-between'>
-            <div class="col-auto">
+            <div class="col">
                 <h1>Modifica post: {{$post->title}}</h1>
             </div>
             <div class="col-auto">
@@ -14,7 +14,7 @@
             </div>
         </div>
             
-        <form action="{{route('admin.posts.update', $post->id)}}" method="POST">
+        <form action="{{route('admin.posts.update', $post->id)}}" method="POST" enctype='multipart/form-data'>
             @csrf
             @method('PUT')
             
@@ -65,10 +65,10 @@
                 @enderror
             </div>
             
-            {{-- <div class="form-group">
-                <label for="thumb">Immagine</label>
-                <input type="data" class="form-control @error('thumb') is-invalid @enderror" id="thumb" name="thumb" placeholder="Inserisci l'url dell'immagine del fumetto">
-            </div> --}}
+            <div class="form-group">
+                <label for="image">Immagine</label>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="Inserisci l'url dell'immagine del post">
+            </div>
             
             <button type="submit" class="btn btn-success"><strong><i class="fa fa-floppy-o" aria-hidden="true"></i></strong> Modifica</button> 
         </form>
