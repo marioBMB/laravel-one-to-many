@@ -20,6 +20,9 @@ class CreatePostsTable extends Migration
             $table->boolean('published')->default(false);
             $table->string('slug')->unique();
             $table->string('image')->nullable();
+            // $table->foreignId('user_id')
+            // ->constrained()  //prende automaticamente l'id  (vai SEMPRE DI migrate:refresh)
+            // ->onDelete('restrict');
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@
             </div>
             <div class="col-4">
                 <h6>Creato il: {{$post->created_at}}</h6>
+                <h5>Da: {{$post->user->name}}</h5>
             </div>
         </div>
 

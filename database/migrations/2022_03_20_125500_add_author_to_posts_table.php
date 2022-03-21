@@ -14,8 +14,8 @@ class AddAuthorToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignId('author')
-            ->constrained('users')  //prende automaticamente l'id  (vai SEMPRE DI migrate:refresh)
+            $table->foreignId('user_id')
+            ->constrained()  //prende automaticamente l'id  (vai SEMPRE DI migrate:refresh)
             ->onDelete('restrict');
         });
     }
@@ -28,8 +28,8 @@ class AddAuthorToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropForeign(['author']); /* nota le [] perché può essere multipla */
-            $table->dropColumn('author'); /* darebbe problemi senza la precedente perché prima va tolta la relazione, va sganciata */
+            $table->dropForeign(['user_id']); /* nota le [] perché può essere multipla */
+            $table->dropColumn('user_id'); /* darebbe problemi senza la precedente perché prima va tolta la relazione, va sganciata */
         });
     }
 }
