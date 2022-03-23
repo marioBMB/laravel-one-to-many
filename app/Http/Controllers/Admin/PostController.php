@@ -78,6 +78,7 @@ class PostController extends Controller
 
         $newPost = new Post();
         $newPost = Post::create($form_data);
+
         return redirect()->route('admin.posts.index');
     }
 
@@ -87,11 +88,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post) /* N.B. dobbiamo per forza chiamarlo post perché è come lo abbiamo chiamato nella rotta, post:slug */
     {   
-        if (!$post){
-            abort(404);
-        }
         return view('admin.posts.show', compact('post'));
     }
 
@@ -132,6 +130,7 @@ class PostController extends Controller
         }
         /* va ricalcolato lo slug solo se cambia il titolo */
         $form_data['slug'] = ($post->title == $form_data['title']) ? $post->slug : $this->slug($form_data['title'], $post->id);
+
         
         $post->update($form_data);
         return redirect()->route('admin.posts.index');

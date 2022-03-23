@@ -29,8 +29,11 @@ Route::middleware('auth')
 ->prefix('admin')
 ->group(function() { /* group() applica tutte le precedenti alle rotte definite dentro la sua function */
     Route::get("/", 'HomeController@index')->name('home'); /* indirizzo qui viene aggiunto a /admin */
-    Route::resource("/posts", 'PostController');
+    Route::get('/posts/{post:slug}', 'PostController@show')->name('posts.show');  /* ha la precedenza sul successivo che è resource */
+    Route::resource("/posts", 'PostController', ['except' => ['show']]); /* se non metto la except mi da conflitti con la show definita manualmente */
 }); 
+
+/* i controller resource non permettono di definire cose in modo personalizzato, come ad es. lo slug al posto dell'id */
 
 Route::get('/posts/{post:slug}', function (Post $post) {
     return $post;
